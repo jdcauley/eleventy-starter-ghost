@@ -36,6 +36,7 @@ module.exports = function(config) {
       images.map(img => {
         img.src = `https://theformat.app/unsafe/${img.src}`
         console.log(img.src)
+        img.srcset = `https://theformat.app/unsafe/540x0/${img.src} 540w, https://theformat.app/unsafe/536x0/${img.src} 360w, https://theformat.app/unsafe/240x0/${img.src} 240w, https://theformat.app/unsafe/640x0/${img.src} 640w`
       })
     }
     content = dom.serialize()
