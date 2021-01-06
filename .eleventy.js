@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const { JSDOM } = require('jsdom')
+const pluginPWA = require("eleventy-plugin-pwa")
 const cleanCSS = require("clean-css");
 const fs = require("fs");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
@@ -49,6 +50,7 @@ module.exports = function(config) {
 
   // Assist RSS feed template
   config.addPlugin(pluginRSS);
+  config.addPlugin(pluginPWA);
   
   // Apply performance attributes to images
   config.addPlugin(lazyImages, {

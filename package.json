@@ -39,6 +39,7 @@
     "dotenv": "^8.0.0",
     "eleventy-plugin-lazyimages": "2.1.0",
     "eleventy-plugin-local-images": "^0.4.0",
+    "eleventy-plugin-pwa": "^1.0.8",
     "eslint-utils": "2.1.0",
     "html-minifier": "^4.0.0",
     "jsdom": "^16.4.0",
