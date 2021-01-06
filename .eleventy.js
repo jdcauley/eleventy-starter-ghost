@@ -26,7 +26,10 @@ const stripDomain = url => {
 
 module.exports = function(config) {
   // Minify HTML
-  config.addTransform("respImages", (rawContent) => {
+  config.addTransform("respImages", (rawContent, outputPath) => {
+    if (!outputPath.endsWith('.html')) {
+      return rawContent
+    }
     let content = rawContent
 
     const dom = new JSDOM(content)
