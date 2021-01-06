@@ -54,7 +54,7 @@
             if ("serviceWorker" in navigator) {
                 navigator.serviceWorker.register("/service-worker.js");
             }
-        </script>> 
+        </script>
 
         {{ site.codeinjection_head | safe if site.codeinjection_head }}
         {{ codeinjection_head | safe if codeinjection_head }}
