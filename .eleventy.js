@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const { JSDOM } = require('jsdom')
 const cleanCSS = require("clean-css");
 const fs = require("fs");
 const pluginRSS = require("@11ty/eleventy-plugin-rss");
@@ -8,6 +9,8 @@ const lazyImages = require("eleventy-plugin-lazyimages");
 const ghostContentAPI = require("@tryghost/content-api");
 
 const htmlMinTransform = require("./src/transforms/html-min-transform.js");
+const { configFunction } = require("eleventy-plugin-local-images");
+const { INSPECT_MAX_BYTES } = require("buffer");
 
 // Init Ghost API
 const api = new ghostContentAPI({
@@ -23,30 +26,41 @@ const stripDomain = url => {
 
 module.exports = function(config) {
   // Minify HTML
+  config.addTransform("respImages", (rawContent) => {
+    let content = rawContent
+
+    const dom = new JSDOM(content)
+    const images = [...dom.window.document.querySelectorAll('img')]
+
+    if (images.length > 0) {
+      images.map(img => {
+        img.src = `https://theformat.app/unsafe/${img.src}`
+        console.log(img.src)
+      })
+    }
+    content = dom.serialize()
+    
+    return content
+  })
   config.addTransform("htmlmin", htmlMinTransform);
 
   // Assist RSS feed template
   config.addPlugin(pluginRSS);
   
-  const useFormatApp = (src) => {
-    const result = `https://theformat.app/unsafe/${src}`
-    return result
-  }
   // Apply performance attributes to images
   config.addPlugin(lazyImages, {
     cacheFile: "",
     preferNativeLazyLoad: true,
-    transformImgPath: (imgPath) => (`https://theformat.app/unsafe/${imgPath}`)
   });
 
-  // Copy images over from Ghost
-  config.addPlugin(localImages, {
-    distPath: "dist",
-    assetPath: "/assets/images",
-    selector: "img",
-    attribute: "data-src", // Lazy images attribute
-    verbose: false
-  });
+  // // Copy images over from Ghost
+  // config.addPlugin(localImages, {
+  //   distPath: "dist",
+  //   assetPath: "/assets/images",
+  //   selector: "img",
+  //   attribute: "data-src", // Lazy images attribute
+  //   verbose: false
+  // });
 
   // Inline CSS
   config.addFilter("cssmin", code => {
