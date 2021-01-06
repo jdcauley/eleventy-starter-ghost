@@ -49,7 +49,12 @@
         {% set css %}{% include "css/styles.css" %}{% endset %}
         <style>{{ css | cssmin | safe }}</style>
 
-        <script>document.documentElement.classList.remove('no-js');</script>
+        <script>
+            document.documentElement.classList.remove('no-js');
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("/service-worker.js");
+            }
+        </script>> 
 
         {{ site.codeinjection_head | safe if site.codeinjection_head }}
         {{ codeinjection_head | safe if codeinjection_head }}
@@ -76,10 +81,5 @@
             {{ site.codeinjection_foot | safe if site.codeinjection_foot }}
             {{ codeinjection_foot | safe if codeinjection_foot }}
         </div>
-        <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/service-worker.js");
-        }
-        </script> 
     </body>
 </html>
