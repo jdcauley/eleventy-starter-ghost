@@ -38,8 +38,8 @@ module.exports = function(config) {
 
     if (images.length > 0) {
       images.map(img => {
-        img.srcset = ` https://theformat.app/unsafe/filters:quality(78)/240x0/${img.src} 240w, https://theformat.app/unsafe/filters:quality(78)/536x0/${img.src} 360w, https://theformat.app/unsafe/filters:quality(78)/540x0/${img.src} 540w, https://theformat.app/unsafe/filters:quality(78)/640x0/${img.src} 640w, https://theformat.app/unsafe/filters:quality(78)/980x0/${img.src} 980w, https://theformat.app/unsafe/filters:quality(78)/1140x0/${img.src} 1140w`
-        img.src = `https://theformat.app/unsafe/filters:quality(78)/${img.src}`
+        img.srcset = ` https://theformat.app/unsafe/filters/240x0/${img.src} 240w, https://theformat.app/unsafe/536x0/${img.src} 360w, https://theformat.app/unsafe/540x0/${img.src} 540w, https://theformat.app/unsafe/640x0/${img.src} 640w, https://theformat.app/unsafe/980x0/${img.src} 980w, https://theformat.app/unsafe/1140x0/${img.src} 1140w`
+        img.src = `https://theformat.app/unsafe/${img.src}`
       })
     }
     content = dom.serialize()
