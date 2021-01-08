@@ -86,6 +86,8 @@ module.exports = function(config) {
   // Don't ignore the same files ignored in the git repo
   config.setUseGitIgnore(false);
 
+  config.addPassthroughCopy({ "src/icons": "assets/icons" })
+
   // Get all pages, called 'docs' to prevent
   // conflicting the eleventy page object
   config.addCollection("docs", async function(collection) {
@@ -228,7 +230,7 @@ module.exports = function(config) {
     },
 
     // Files read by Eleventy, add as needed
-    templateFormats: ["css", "njk", "md", "txt"],
+    templateFormats: ["css", "njk", "md", "txt", "json"],
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
     passthroughFileCopy: true
